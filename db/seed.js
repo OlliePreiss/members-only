@@ -21,11 +21,11 @@ const users = [{
 const messages = [{
   title: "Hi",
   body: "This is the body",
-  user_id: 1,
+  user_id: 5,
   }, {
     title: "Hello",
     body: "This is the body",
-    user_id: 1,
+    user_id: 6,
   }
 ]
 
@@ -39,7 +39,9 @@ async function populateUsers() {
     port: process.env.DB_PORT
   });
   await client.connect();
-  await client.query("INSERT INTO users (fullName, username, password, membershipStatus) VALUES ($1, $2, $3, $4)", [users[0].fullName, users[0].username, users[0].password, users[0].membershipStatus])
+  for (const user of users) {
+    await client.query("INSERT INTO users (fullName, username, password, membershipStatus) VALUES ($1, $2, $3, $4)", [user.fullName, user.username, user.password, user.membershipStatus])
+  };
   await client.end();
   console.log("users seeding complete");
 }
@@ -54,11 +56,16 @@ async function populateMessages() {
     port: process.env.DB_PORT
   });
   await client.connect();
-  // const userId = await client.query("SELECT id FROM users")
-  await client.query("INSERT INTO messages (title, body, createdAt, user_id) VALUES ($1, $2, NOW(), $3)",[messages[0].title,messages[0].body,messages[0].user_id])
+  for (const message of messages) {
+    await client.query("INSERT INTO messages (title, body, createdAt, user_id) VALUES ($1, $2, NOW(), $3)",[message.title,message.body,message.user_id])
+  };
   await client.end()
   console.log("mesages seeding complete")
 }
 
-// populateUsers();
-populateMessages();
+async function seed() {
+  await populateUsers();
+  populateMessages();
+}
+
+seed();

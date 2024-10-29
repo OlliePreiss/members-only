@@ -1,10 +1,10 @@
 const express = require('express')
-const session = require('express-session')
-const passport = require('passport')
-const bcrypt = require('bcryptjs')
+
+const userRouter = require('./routes/userRouter')
 
 const app = express();
 
 app.get("/", (req,res) => res.send("Hello world"));
+app.get("/users", userRouter)
 
 app.listen(3005);
