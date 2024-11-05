@@ -2,13 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Chat Forum</title>
+  <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
   <h1>Sign up</h1>
   <form action="/sign-up" method="POST">
+    <label for="fullName">Full name: </label>
+    <input type="text" name="fullName" id="fullName" required>
     <label for="username">Username: </label>
     <input type="text" name="username" id="username" required>
     <label for="password">Password: </label>

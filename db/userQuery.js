@@ -11,9 +11,12 @@ async function findUsers(username) {
 }
 
 async function insertUser(user) {
-  // membership status will need to be managed separatley at some point
-  // add error checking for each
-  await pool.query("INSERT INTO users (fullName, username, password, membershipStatus) VALUES ($1, $2, $3, $4)", [user.fullName, user.username, user.password, user.membershipStatus])
+  try {
+    await pool.query("INSERT INTO users (fullName, username, password, membershipStatus) VALUES ($1, $2, $3, true)", [user.fullName, user.username, user.password])
+    return;
+  } catch(err) {
+    throw err;
+  }
 }
 
 async function deleteUser(username) {
