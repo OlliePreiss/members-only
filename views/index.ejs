@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Forum</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Chat Forum</h1>
+  </header>
+
+  <main>
+    <section class="message-list">
+      <% messages.forEach(message => { %>
+        <div class="message-card">
+          <h2 class="message-title"><%= message.title %></h2>
+          <p class="message-body"><%= message.body %></p>
+          <div class="message-info">
+            <span class="message-author">Posted by: <%= message.username %></span>
+            <span class="message-createdAt"> <%= message.createdAt %></span>
+          </div>
+        </div>
+      <% }) %>
+    </section>
+  </main>
+</body>
+</html>
