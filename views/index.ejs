@@ -9,37 +9,43 @@
 <body>
   <header id="sticky-header">
     <div class="container">
-        <div class="logo">Chat Room</div>
+        <div class="logo">TheClub.</div>
         <% if (locals.user) { %>
-          <h1> Hello <%= user.username %> </h1>
-          <a href="/log-out">Log out</a>
+          <div class="nav-links">
+            <p class="username"> 👤 <%= user.username %> </p>
+            <a class="nav-button" href="/log-out">Log out</a>
+          </div>
         <% } else { %>
-          <a class="login-button" href="/log-in">Log In</a>
+          <a class="nav-button" href="/log-in">Log In</a>
         <% } %>
     </div>
   </header>
   <main>
-    <% if (locals.user) { %>
-      <section class="post-message">
-        <form action="/messages/create" method="POST">
-          <label for="title">Title: </label>
-          <input type="text" name="title" id="title" required>
-          <input type="text" name="body" id="body" placeholder="Write your message here" required>
-          <button type="submit">Post</button>
-        </form>
-      </section>
-    <% } %>
+
     <section class="message-list">
+      <% if (locals.user) { %>
+        <div class="post-message">
+          <form class="post-message-form" action="/messages/create" method="POST">
+            <form action="/messages/create" method="POST">
+              <textarea name="body" id="body" placeholder="What's happening?" required></textarea>
+              <button type="submit" class="button-post">Post</button>
+            </form>
+        </div>
+      <% } %>
       <% messages.forEach(message => { %>
         <div class="message-card">
-          <h2 class="message-title"><%= message.title %></h2>
-          <p class="message-body"><%= message.body %></p>
-          <div class="message-info">
+          <div class="message-header">
+            <div class="message-avatar">
+              <div class="default-avatar"></div>
+            </div>
             <% if (locals.user) { %>
-              <span class="message-author">Posted by: <%= message.username %></span>
+            <span class="message-author"><%= message.username %></span>
+            <% } else { %>
+            <span class="message-author"> Private User </span>
             <% } %>
-            <span class="message-createdAt"> <%= message.createdAt %></span>
+            <span class="message-createdAt"><%= message.createdat %></span>
           </div>
+          <p class="message-body"><%= message.body %></p>
         </div>
       <% }) %>
     </section>
@@ -47,19 +53,10 @@
 
   <script>
     const header = document.getElementById('sticky-header');
-    const logo = header.querySelector('.logo');
-    const loginButton = header.querySelector('.login-button');
-
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.classList.add('scrolled');
-            logo.classList.add('scrolled');
-            loginButton.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-            logo.classList.remove('scrolled');
-            loginButton.classList.remove('scrolled');
-        }
+      header.classList.toggle('scrolled', window.scrollY > 50);
     });
+  </script>
+
 </body>
 </html>

@@ -27,47 +27,105 @@ h1 {
 .message-list {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 0;
   max-width: 800px;
   margin: 0 auto;
+}
+
+
+/* Post message */
+.post-message {
+  background-color: #fff;
+  padding: 15px;
+  border-bottom: 1px solid #ddd; /* Divider line between cards */
+  min-width: 280px;
+}
+
+.post-message-form {
+  background-color: #fff;
+  width: 100%;
+}
+
+textarea {
+  width: 95%;
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  resize: none;
+  box-sizing: content-box;
+  font-family: Arial, sans-serif;
+  color: #888;
+}
+
+textarea:focus {
+  outline: none;
+  border-color: #333;
+  color: #333;
+}
+
+.button-post {
+  margin-top: 10px;
+  padding: 10px 20px;
+  border: none;
+  color: #fff;
+  border-radius: 48px;
+  cursor: pointer;
+  width: min-content;
 }
 
 /* Message card styling */
 .message-card {
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  transition: transform 0.2s ease;
+  padding: 15px;
+  border-bottom: 1px solid #ddd; /* Divider line between cards */
+  min-width: 280px;
 }
 
-.message-card:hover {
-  transform: translateY(-5px);
-}
-
-.message-title {
-  font-size: 1.5rem;
-  color: #007BFF;
+/* Message header with avatar and user info */
+.message-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   margin-bottom: 10px;
 }
 
-.message-body {
-  font-size: 1rem;
-  color: #555;
-  margin-bottom: 15px;
-}
-
-.message-info {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  color: #888;
+.default-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ccc;
 }
 
 .message-author {
-  font-weight: bold;
+  font-weight: normal;
+  font-size: 1rem;
+  color: #333;
 }
 
 .message-createdAt {
-  font-style: italic;
+  font-size: 0.9rem;
+  color: #888;
+  margin-left: auto;
+}
+
+/* Message body */
+.message-body {
+  font-size: 1rem;
+  color: #555;
+  word-wrap: break-word;
+  margin: 0; /* No bottom margin */
+}
+
+/* Responsive design for different screen sizes */
+@media (min-width: 600px) {
+  .message-card {
+    min-width: 400px;
+  }
+}
+
+@media (min-width: 800px) {
+  .message-card {
+    min-width: 600px;
+  }
 }

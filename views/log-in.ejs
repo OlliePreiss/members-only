@@ -8,13 +8,15 @@
 </head>
 <body>
   <h1>Log in</h1>
-  <form action="/log-in" method="POST">
+  <form class="sign-up-form" action="/log-in" method="POST">
     <label for="username">Username: </label>
     <input type="text" name="username" id="username" required>
     <label for="password">Password: </label>
     <input type="text" name="password" id="password" required>
     <button type="submit">Submit</button>
   </form>
-  <a href="/sign-up">Not a member? Sign-up now </a>
+  <div class="ref-link">
+    <a href="/sign-up">Not a member? Sign-up now </a>
+  </div>
 </body>
 </html>

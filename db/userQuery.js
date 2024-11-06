@@ -12,8 +12,8 @@ async function findUsers(username) {
 
 async function insertUser(user) {
   try {
-    await pool.query("INSERT INTO users (fullName, username, password, membershipStatus) VALUES ($1, $2, $3, true)", [user.fullName, user.username, user.password])
-    return;
+    const result = await pool.query("INSERT INTO users (fullName, username, password, membershipStatus) VALUES ($1, $2, $3, true) RETURNING *", [user.fullName, user.username, user.password])
+    return result.rows[0];
   } catch(err) {
     throw err;
   }

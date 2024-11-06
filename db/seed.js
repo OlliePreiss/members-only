@@ -19,11 +19,9 @@ const users = [{
 ]
 
 const messages = [{
-  title: "Hi",
   body: "This is the body",
   user_id: 5,
   }, {
-    title: "Hello",
     body: "This is the body",
     user_id: 6,
   }

@@ -2,8 +2,29 @@ const bcrypt = require('bcryptjs')
 const messagedb = require('../db/messageQuery');
 const userdb = require('../db/userQuery');
 
+function timeDifference(now, createdAt) {
+  const createdAtDate = new Date(createdAt);
+  const diffInMilliseconds = now - createdAt;
+  const diffInMinutes = Math.floor(diffInMilliseconds / 60000);
+  const diffInHours = Math.floor(diffInMilliseconds / 3600000);
+  const diffInDays = Math.floor(diffInMilliseconds / 86400000);
+
+  if (diffInMinutes < 60) {
+    return `${diffInMinutes} minute${diffInMinutes !== 1 ? 's' : ''} ago`;
+  } else if (diffInHours < 24) {
+    return `${diffInHours} hour${diffInHours !== 1 ? 's' : ''} ago`;
+  } else {
+    return `${diffInDays} day${diffInDays !== 1 ? 's' : ''} ago`;
+}
+}
+
 async function messageListGet(req, res) {
   const messages = await messagedb.getAllMessages();
+  const now = new Date();
+  messages.forEach(message => {
+    message.createdat = timeDifference(now, message.createdat)
+  })
+
   res.render("index", {
     messages: messages,
     user: req.user
@@ -21,10 +42,16 @@ async function signUpPost(req, res, next) {
         next(err)
       } else {
         req.body.password = hashedPassword
-        await userdb.insertUser(req.body);
+        const newUser = await userdb.insertUser(req.body);
+
+        req.login(newUser, (loginErr) => {
+          if (loginErr) {
+            return next(loginErr);
+          }
+          return res.redirect("/");
+        })
       }
     });
-    res.redirect("/")
   } catch (error) {
     next(error);
   }
