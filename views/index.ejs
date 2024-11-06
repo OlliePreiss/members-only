@@ -10,7 +10,7 @@
   <header id="sticky-header">
     <div class="container">
         <div class="logo">Chat Room</div>
-        <% if (locals.user) {%>
+        <% if (locals.user) { %>
           <h1> Hello <%= user.username %> </h1>
           <a href="/log-out">Log out</a>
         <% } else { %>
@@ -19,13 +19,25 @@
     </div>
   </header>
   <main>
+    <% if (locals.user) { %>
+      <section class="post-message">
+        <form action="/messages/create" method="POST">
+          <label for="title">Title: </label>
+          <input type="text" name="title" id="title" required>
+          <input type="text" name="body" id="body" placeholder="Write your message here" required>
+          <button type="submit">Post</button>
+        </form>
+      </section>
+    <% } %>
     <section class="message-list">
       <% messages.forEach(message => { %>
         <div class="message-card">
           <h2 class="message-title"><%= message.title %></h2>
           <p class="message-body"><%= message.body %></p>
           <div class="message-info">
-            <span class="message-author">Posted by: <%= message.username %></span>
+            <% if (locals.user) { %>
+              <span class="message-author">Posted by: <%= message.username %></span>
+            <% } %>
             <span class="message-createdAt"> <%= message.createdAt %></span>
           </div>
         </div>

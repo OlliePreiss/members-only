@@ -1,3 +1,4 @@
+const bcrypt = require('bcryptjs')
 const messagedb = require('../db/messageQuery');
 const userdb = require('../db/userQuery');
 
@@ -15,7 +16,14 @@ async function signUpGet(req, res) {
 
 async function signUpPost(req, res, next) {
   try {
-    await userdb.insertUser(req.body);
+    bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
+      if (err)  {
+        next(err)
+      } else {
+        req.body.password = hashedPassword
+        await userdb.insertUser(req.body);
+      }
+    });
     res.redirect("/")
   } catch (error) {
     next(error);

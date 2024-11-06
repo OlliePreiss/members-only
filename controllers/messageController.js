@@ -6,6 +6,16 @@ async function messageListGet(req, res) {
   res.render("index", { messages: messages })
 }
 
+async function messageCreatePost(req, res, next) {
+  try {
+    await db.insertMessage(req.body, req.session.passport.user)
+    res.redirect("/");
+  } catch(err) {
+    next(err)
+  }
+}
+
 module.exports = {
-  messageListGet
+  messageListGet,
+  messageCreatePost
 }
